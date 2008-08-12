@@ -9,6 +9,7 @@ template <class T_CONTEXT> class FSM_situation:public FSM_situation_if
 	public:
 		// Constructors and destructors
 		FSM_situation(void);
+		FSM_situation(const FSM_situation &p_situation);
 		virtual ~FSM_situation(void);
 
 		// Methods inherited from interface

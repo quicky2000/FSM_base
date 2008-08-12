@@ -1,9 +1,16 @@
 //-----------------------------------------------------------------------------
 template <class T_CONTEXT>
-	FSM_situation<T_CONTEXT>::FSM_situation(void)
-	{
-		m_context = NULL;
-	}
+FSM_situation<T_CONTEXT>::FSM_situation(void):
+  m_context(NULL)  
+{
+}
+
+//-----------------------------------------------------------------------------
+template <class T_CONTEXT>
+FSM_situation<T_CONTEXT>::FSM_situation(const FSM_situation &p_situation)
+{
+  m_context = new T_CONTEXT(*(p_situation.getContext()));
+}
 
 //-----------------------------------------------------------------------------
 template <class T_CONTEXT>
