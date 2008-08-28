@@ -1,5 +1,5 @@
-#ifndef _FSM_SITUATION_
-#define _FSM_SITUATION_
+#ifndef FSM_SITUATION
+#define FSM_SITUATION
 
 #include "FSM_situation_if.h"
 #include "assert.h"
@@ -29,4 +29,4 @@ template <class T_CONTEXT> class FSM_situation:public FSM_situation_if
 
 #include "FSM_situation.hpp"
 
-#endif
+#endif /* FSM_SITUATION */
