@@ -1,3 +1,5 @@
+#include "FSM_weighted_transition_index.h"
+
 #include <iostream>
 using namespace std;
 
@@ -59,6 +61,19 @@ void FSM<T_SITUATION,T_TRANSITION>::setCurrentSituation
     {
       cout << "FSM<T_SITUATION,T_TRANSITION>::" << __FUNCTION__ << " ERROR : bad situation type" << endl ;
       exit(-1);
+    }
+}
+
+//-----------------------------------------------------------------------------
+template <class T_SITUATION,class T_TRANSITION>
+void FSM<T_SITUATION,T_TRANSITION>::computeTransitionWeights(std::vector<FSM_weighted_transition_index_if*> &p_vector)const
+{
+  cout << "Default implementation of " << __FUNCTION__ << endl ;
+
+  unsigned int l_nb_transition = this->getSituation()->getContext()->getNbTransitions();
+  for(unsigned int l_index=0;l_index<l_nb_transition; l_index++)
+    {
+      p_vector.push_back(new FSM_weighted_transition_index(l_index));
     }
 }
 

@@ -21,6 +21,7 @@ template <class T_SITUATION,class T_TRANSITION> class FSM: public FSM_if
   virtual void configure(void)=0;
   virtual std::string toString(void)const=0;
   std::string getFsmName(void)const;
+  void computeTransitionWeights(std::vector<FSM_weighted_transition_index_if*> &p_vector)const;
 
   // Specific methods
   void setSituation(T_SITUATION *p_situation);
