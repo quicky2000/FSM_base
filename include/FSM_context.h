@@ -19,7 +19,7 @@ template <class T_TRANSITION> class FSM_context:public FSM_context_if
 
   // Specific method
   T_TRANSITION* getSpecificTransition(unsigned int p_index)const;
-  void addTransition(T_TRANSITION *p_transition);
+  void addTransitions(const vector<T_TRANSITION*> &p_transitions);
   bool transitionsComputed(void)const;
 
  private:

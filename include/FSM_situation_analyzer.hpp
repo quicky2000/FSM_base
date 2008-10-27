@@ -12,12 +12,6 @@ void FSM_situation_analyzer<T_SITUATION,T_TRANSITION>::computeTransitions
  )
 {
   assert(!p_situation->getContext()->transitionsComputed());
-  std::vector<T_TRANSITION*> l_transitions = this->getTransitions(p_situation);
-  typename std::vector<T_TRANSITION*>::iterator l_iter = l_transitions.begin();
-  typename std::vector<T_TRANSITION*>::iterator l_iter_end = l_transitions.end();
-  while(l_iter != l_iter_end)
-    {
-      p_situation->getContext()->addTransition(*l_iter);
-      l_iter++;
-    }
+
+  p_situation->getContext()->addTransitions(this->getTransitions(p_situation));
 }

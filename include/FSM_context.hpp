@@ -57,13 +57,10 @@ T_TRANSITION* FSM_context<T_TRANSITION>::getSpecificTransition
 
 //-----------------------------------------------------------------------------
 template <class T_TRANSITION>
-void FSM_context<T_TRANSITION>::addTransition
-(
- T_TRANSITION *p_transition
- )
+void FSM_context<T_TRANSITION>::addTransitions(const vector<T_TRANSITION*> &p_transitions)
 {
   m_transition_added = true;
-  m_transitions.push_back(p_transition);
+  m_transitions = p_transitions;
 }
 
 //-----------------------------------------------------------------------------
