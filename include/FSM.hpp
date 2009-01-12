@@ -1,5 +1,6 @@
 #include "FSM_weighted_transition_index.h"
 
+#include <cstdlib>
 #include <iostream>
 using namespace std;
 
