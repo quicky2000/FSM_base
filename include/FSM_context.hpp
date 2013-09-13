@@ -6,6 +6,12 @@ using namespace std;
 template <class T_TRANSITION>
 FSM_context<T_TRANSITION>::~FSM_context(void)
 {
+  for(typename vector<T_TRANSITION*>::iterator l_iter =  m_transitions.begin();
+      m_transitions.end() != l_iter;
+      ++l_iter)
+    {
+      delete *l_iter;
+    }
   m_transitions.clear();
 }
 

@@ -37,7 +37,7 @@ FSM<T_SITUATION,T_TRANSITION>::~FSM(void)
     }
   if(m_situation)
     {
-      delete m_situation;
+      // Dont delete the situation as it is managed externally
       m_situation = NULL;
     }
 }
@@ -93,6 +93,7 @@ void FSM<T_SITUATION,T_TRANSITION>::selectTransition
  )
 {
   T_TRANSITION* l_selected_transition = this->getSituation()->getContext()->getSpecificTransition(p_transition_index);
+  std::cout << l_selected_transition->toString() << std::endl ;
   this->setSituation(m_motor->run(this->getSituation(),l_selected_transition));
 }
 
