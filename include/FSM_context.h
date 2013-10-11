@@ -16,11 +16,11 @@ template <class T_TRANSITION> class FSM_context:public FSM_context_if
   // Methods inherited from interface
   unsigned int getNbTransitions(void)const;
   FSM_transition_if* getTransition(unsigned int p_index)const;
+  bool transitionsComputed(void)const;
 
   // Specific method
   T_TRANSITION* getSpecificTransition(unsigned int p_index)const;
   void addTransitions(const vector<T_TRANSITION*> &p_transitions);
-  bool transitionsComputed(void)const;
 
  private:
   vector<T_TRANSITION*> m_transitions;
