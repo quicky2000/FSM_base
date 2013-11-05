@@ -2,123 +2,114 @@
 
 #include <cstdlib>
 #include <iostream>
-using namespace std;
 
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-FSM<T_SITUATION,T_TRANSITION>::FSM
-(
- string p_name,
- FSM_motor<T_SITUATION,T_TRANSITION> *p_motor,
- FSM_situation_analyzer<T_SITUATION,T_TRANSITION> *p_analyzer
- ):
-  m_name(p_name),
-  m_situation(NULL),
-  m_motor(p_motor),
-  m_analyzer(p_analyzer)
+namespace FSM_base
 {
-  assert(m_motor);
-  assert(m_analyzer);
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  FSM<T_SITUATION,T_TRANSITION>::FSM(const std::string & p_name,
+				     FSM_motor<T_SITUATION,T_TRANSITION> & p_motor,
+				     FSM_situation_analyzer<T_SITUATION,T_TRANSITION> & p_analyzer
+				     ):
+    m_name(p_name),
+    m_situation(NULL),
+    m_motor(p_motor),
+    m_analyzer(p_analyzer)
+  {
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  FSM<T_SITUATION,T_TRANSITION>::~FSM(void)
+  {
+    delete & m_motor;
+    delete & m_analyzer;
+    if(m_situation)
+      {
+	// Dont delete the situation as it is managed externally
+	m_situation = NULL;
+      }
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  typename FSM<T_SITUATION,T_TRANSITION>::FSM_situation_if & FSM<T_SITUATION,T_TRANSITION>::get_current_situation(void)const
+  {
+    assert(m_situation);
+    return *m_situation;
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  void FSM<T_SITUATION,T_TRANSITION>::set_current_situation
+  (
+   FSM_situation_if & p_situation
+   )
+  {
+    m_situation = dynamic_cast<T_SITUATION*>(&p_situation);
+    if(m_situation == NULL)
+      {
+	std::cout << "FSM<T_SITUATION,T_TRANSITION>::" << __FUNCTION__ << " ERROR : bad situation type" << std::endl ;
+	exit(-1);
+      }
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  void FSM<T_SITUATION,T_TRANSITION>::compute_transition_weights(std::vector<FSM_weighted_transition_index_if*> &p_vector)const
+  {
+    std::cout << "Default implementation of " << __FUNCTION__ << std::endl ;
+    transition_index_t l_nb_transition = this->get_situation().get_context()->get_nb_transitions();
+    for(transition_index_t l_index=0;l_index<l_nb_transition; ++l_index)
+      {
+	p_vector.push_back(new FSM_weighted_transition_index(l_index));
+      }
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  void FSM<T_SITUATION,T_TRANSITION>::compute_transitions(void)
+  {
+    assert(m_situation);
+    m_analyzer.compute_transitions(*m_situation);
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  void FSM<T_SITUATION,T_TRANSITION>::select_transition
+  (
+   const transition_index_t & p_transition_index
+   )
+  {
+    const T_TRANSITION & l_selected_transition = this->get_situation().get_context()->get_specific_transition(p_transition_index);
+    std::cout << l_selected_transition.to_string() << std::endl ;
+    this->set_situation(m_motor.run(this->get_situation(),l_selected_transition));
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  const std::string & FSM<T_SITUATION,T_TRANSITION>::get_fsm_name(void)const
+  {
+    return m_name;
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  void FSM<T_SITUATION,T_TRANSITION>::set_situation
+  (
+   T_SITUATION & p_situation
+   )
+  {
+    m_situation = & p_situation;		
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
+  T_SITUATION & FSM<T_SITUATION,T_TRANSITION>::get_situation(void)const
+  {
+    assert(m_situation);
+    return * m_situation;		
+  }
+
 }
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-FSM<T_SITUATION,T_TRANSITION>::~FSM(void)
-{
-  if(m_motor)
-    {
-      delete m_motor;
-      m_motor = NULL;
-    }
-  if(m_analyzer)
-    {
-      delete m_analyzer;
-      m_analyzer = NULL;
-    }
-  if(m_situation)
-    {
-      // Dont delete the situation as it is managed externally
-      m_situation = NULL;
-    }
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-FSM_situation_if* FSM<T_SITUATION,T_TRANSITION>::getCurrentSituation(void)const
-{
-  return m_situation;
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-void FSM<T_SITUATION,T_TRANSITION>::setCurrentSituation
-(
- FSM_situation_if* p_situation
- )
-{
-  assert(p_situation);
-  m_situation = dynamic_cast<T_SITUATION*>(p_situation);
-  if(m_situation == NULL)
-    {
-      cout << "FSM<T_SITUATION,T_TRANSITION>::" << __FUNCTION__ << " ERROR : bad situation type" << endl ;
-      exit(-1);
-    }
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-void FSM<T_SITUATION,T_TRANSITION>::computeTransitionWeights(std::vector<FSM_weighted_transition_index_if*> &p_vector)const
-{
-  cout << "Default implementation of " << __FUNCTION__ << endl ;
-
-  unsigned int l_nb_transition = this->getSituation()->getContext()->getNbTransitions();
-  for(unsigned int l_index=0;l_index<l_nb_transition; l_index++)
-    {
-      p_vector.push_back(new FSM_weighted_transition_index(l_index));
-    }
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-void FSM<T_SITUATION,T_TRANSITION>::computeTransitions(void)
-{
-  m_analyzer->computeTransitions(m_situation);
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-void FSM<T_SITUATION,T_TRANSITION>::selectTransition
-(
- unsigned int p_transition_index
- )
-{
-  T_TRANSITION* l_selected_transition = this->getSituation()->getContext()->getSpecificTransition(p_transition_index);
-  std::cout << l_selected_transition->toString() << std::endl ;
-  this->setSituation(m_motor->run(this->getSituation(),l_selected_transition));
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-string FSM<T_SITUATION,T_TRANSITION>::getFsmName(void)const
-{
-  return m_name;
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-void FSM<T_SITUATION,T_TRANSITION>::setSituation
-(
- T_SITUATION *p_situation
- )
-{
-  assert(p_situation);
-  m_situation = p_situation;		
-}
-
-//-----------------------------------------------------------------------------
-template <class T_SITUATION,class T_TRANSITION>
-T_SITUATION* FSM<T_SITUATION,T_TRANSITION>::getSituation(void)const
-{
-  return m_situation;		
-}
-
+//EOF

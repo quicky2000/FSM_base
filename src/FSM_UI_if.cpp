@@ -1,10 +1,12 @@
 #include "FSM_UI_if.h"
 
-FSM_UI_if::~FSM_UI_if(void)
+namespace FSM_interfaces
 {
+  void register_fsm_ui(const std::string & p_fsm_name,
+                       FSM_UI_creator_t p_creator,
+                       std::map<std::string,FSM_UI_creator_t> & p_factory)
+  {
+    p_factory.insert(std::map<std::string,FSM_UI_creator_t>::value_type(p_fsm_name,p_creator));
+  }
 }
-
-void registerFsmUi(string p_fsm_name,FSM_UI_creator p_creator,map<string,FSM_UI_creator> *p_factory)
-{
-	p_factory->insert(map<string,FSM_UI_creator>::value_type(p_fsm_name,p_creator));
-}
+//EOF

@@ -5,19 +5,26 @@
 #include <string>
 #include <assert.h>
 
-template <class T_SITUATION,class T_TRANSITION> class FSM_situation_analyzer
+namespace FSM_base
 {
- public:
-  // Methods to implement
-  virtual std::string toString(void)=0;
-  virtual std::vector<T_TRANSITION*> getTransitions(T_SITUATION* p_situation)=0;
-  void computeTransitions(T_SITUATION* p_situation);
+  template <class T_SITUATION,class T_TRANSITION> class FSM_situation_analyzer
+  {
+  public:
+    // Methods to implement
+    virtual const std::string & get_class_name(void)const=0;
+    
+    void compute_transitions(T_SITUATION & p_situation);
 
-  // Virtual destructor
-  virtual ~FSM_situation_analyzer(void);
+    // Virtual destructor
+    virtual ~FSM_situation_analyzer(void);
 
-};
+  private:
+    virtual std::vector<const T_TRANSITION *> & get_transitions(T_SITUATION & p_situation)=0;
+
+  };
+}
 
 #include "FSM_situation_analyzer.hpp"
 
-#endif /* FSM_SITUATION_ANALYZER */
+#endif // FSM_SITUATION_ANALYZER 
+//EOF
