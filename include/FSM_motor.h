@@ -35,7 +35,5 @@ namespace FSM_base
   };
 }
 
-#include "FSM_motor.hpp"
-
 #endif // FSM_MOTOR_H 
 //EOF
