@@ -28,8 +28,8 @@ namespace FSM_base
   //-----------------------------------------------------------------------------
   template <class T_CONTEXT>
   FSM_situation<T_CONTEXT>::FSM_situation(const FSM_situation &p_situation):
-    m_context(new T_CONTEXT(*(p_situation.getContext()))),
-    m_valid(p_situation.isValid())
+    m_context(new T_CONTEXT(*(p_situation.get_context()))),
+    m_valid(p_situation.is_valid())
   {
   }
 
