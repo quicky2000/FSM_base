@@ -99,7 +99,9 @@ namespace FSM_base
    )
   {
     const T_TRANSITION & l_selected_transition = this->get_situation().get_context()->get_specific_transition(p_transition_index);
+#ifdef FSM_VERBOSE
     std::cout << l_selected_transition.to_string() << std::endl ;
+#endif // FSM_VERBOSE
     this->set_situation(m_motor.run(this->get_situation(),l_selected_transition));
   }
 
