@@ -27,7 +27,7 @@ namespace FSM_base
 {
   template <class T_SITUATION,class T_TRANSITION> class FSM: public FSM_interfaces::FSM_if
   {
-  private:
+  protected:
     typedef FSM_interfaces::FSM_situation_if FSM_situation_if;
     typedef FSM_interfaces::FSM_types::transition_index_t transition_index_t;
     typedef FSM_interfaces::FSM_weighted_transition_index_if FSM_weighted_transition_index_if;
