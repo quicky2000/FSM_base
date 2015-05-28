@@ -107,6 +107,20 @@ namespace FSM_base
 
   //-----------------------------------------------------------------------------
   template <class T_SITUATION,class T_TRANSITION>
+  void FSM<T_SITUATION,T_TRANSITION>::apply_transition
+  (
+   const transition_index_t & p_transition_index
+   )
+  {
+    const T_TRANSITION & l_selected_transition = this->get_situation().get_context()->get_specific_transition(p_transition_index);
+#ifdef FSM_VERBOSE
+    std::cout << l_selected_transition.to_string() << std::endl ;
+#endif // FSM_VERBOSE
+    m_motor.apply(this->get_situation(),l_selected_transition);
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
   const std::string & FSM<T_SITUATION,T_TRANSITION>::get_fsm_name(void)const
   {
     return m_name;

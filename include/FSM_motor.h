@@ -30,6 +30,9 @@ namespace FSM_base
     virtual T_SITUATION & run(const T_SITUATION & p_situation,
 			      const T_TRANSITION & p_transition)=0;
 
+    virtual void apply(T_SITUATION & p_situation,
+		       const T_TRANSITION & p_transition)=0;
+
     // Virtual destructor
     inline virtual ~FSM_motor(void){};
   };

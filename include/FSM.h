@@ -42,6 +42,7 @@ namespace FSM_base
     FSM_situation_if & get_current_situation(void)const;
     void set_current_situation(FSM_situation_if & p_situation);
     void select_transition(const transition_index_t & p_transition_index);
+    void apply_transition(const transition_index_t & p_transition_index);
     void compute_transitions(void);
     virtual void configure(void)=0;
     //TO DELETE   virtual const std::string & get_class_name(void)const=0;
