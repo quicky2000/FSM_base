@@ -33,6 +33,8 @@ namespace FSM_base
     virtual void apply(T_SITUATION & p_situation,
 		       const T_TRANSITION & p_transition)=0;
 
+    virtual void revert_transition(T_SITUATION & p_situation)=0;
+
     // Virtual destructor
     inline virtual ~FSM_motor(void){};
   };

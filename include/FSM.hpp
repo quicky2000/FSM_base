@@ -121,6 +121,15 @@ namespace FSM_base
 
   //-----------------------------------------------------------------------------
   template <class T_SITUATION,class T_TRANSITION>
+  void FSM<T_SITUATION,T_TRANSITION>::revert
+  (
+   )
+  {
+    m_motor.revert_transition(this->get_situation());
+  }
+
+  //-----------------------------------------------------------------------------
+  template <class T_SITUATION,class T_TRANSITION>
   const std::string & FSM<T_SITUATION,T_TRANSITION>::get_fsm_name(void)const
   {
     return m_name;
