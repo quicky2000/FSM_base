@@ -24,6 +24,12 @@ namespace FSM_base
   template <class T_TRANSITION>
   FSM_context<T_TRANSITION>::~FSM_context(void)
   {
+    remove_transitions();
+  }
+  //-----------------------------------------------------------------------------
+  template <class T_TRANSITION>
+  void FSM_context<T_TRANSITION>::remove_transitions(void)
+  {
     if(m_transitions)
       {
 	for(typename std::vector<const T_TRANSITION *>::const_iterator l_iter =  m_transitions->begin();
