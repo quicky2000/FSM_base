@@ -1,3 +1,4 @@
 depend:FSM_interfaces
 CFLAGS:
 LDFLAGS:
+env_variables:
