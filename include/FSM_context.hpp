@@ -52,7 +52,7 @@ namespace FSM_base
 
   //-----------------------------------------------------------------------------
   template <class T_TRANSITION>
-  const typename FSM_context<T_TRANSITION>::transition_index_t FSM_context<T_TRANSITION>::get_nb_transitions(void)const
+  typename FSM_context<T_TRANSITION>::transition_index_t FSM_context<T_TRANSITION>::get_nb_transitions(void)const
   {
     assert(m_transitions);
     return m_transitions->size();

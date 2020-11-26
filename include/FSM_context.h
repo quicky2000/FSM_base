@@ -36,10 +36,10 @@ namespace FSM_base
     virtual ~FSM_context(void);
 
     // Methods inherited from interface
-    const transition_index_t get_nb_transitions(void)const;
-    const FSM_transition_if & get_transition(const transition_index_t & p_index)const;
-    bool transitions_computed(void)const;
-    void remove_transitions(void);
+    transition_index_t get_nb_transitions(void)const override;
+    const FSM_transition_if & get_transition(const transition_index_t & p_index)const override;
+    bool transitions_computed(void)const override;
+    void remove_transitions(void) override;
 
     // Specific method
     const T_TRANSITION & get_specific_transition(const transition_index_t & p_index)const;
