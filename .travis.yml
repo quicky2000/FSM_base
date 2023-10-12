@@ -25,7 +25,10 @@ before_install:
   - cd build
 
 script:
-  - generate_makefile FSM_base
-  - make test
-  - ./bin/FSM_base.exe
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then generate_makefile FSM_base; make test; ./bin/FSM_base.exe; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cd $MY_LOCATION ; mkdir cmake_build ; cd cmake_build ; fi
+  - cmake $QUICKY_REPOSITORY/FSM_base
+  - make
+  - ./FSM_base
+
 #EOF
