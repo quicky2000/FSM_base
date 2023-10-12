@@ -1,9 +1,13 @@
 # FSM_base
 #--------------
-Continuous integration with Travis-Ci:
-https://travis-ci.org/quicky2000/FSM_base
-
 Some base classes for FSM framework
 
+Continuous integration with Travis-Ci:
+https://app.travis-ci.com/github/quicky2000/FSM_base
+
+## License
+##---------
 Please see COPYING for info on the license.
+
+#EOF
 
